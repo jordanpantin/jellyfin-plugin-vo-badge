@@ -1,0 +1,20 @@
+[
+  {
+    "category": "Metadata",
+    "guid": "afe810c4-75a5-40e7-b737-fc5e2592d35f",
+    "name": "VoBadge",
+    "description": "Adds a VO (Version Originale) badge to series posters when the content is only available in the original language without the preferred language audio track.",
+    "owner": "jorda",
+    "overview": "Visual Indicator for Original Language Content",
+    "versions": [
+      {
+        "checksum": "PLACEHOLDER_CHECKSUM",
+        "changelog": "Initial release with VO badge support for TV series",
+        "targetAbi": "10.11.2.0",
+        "sourceUrl": "https://github.com/jordanpantin/jellyfin-plugin-vo-badge/archive/refs/tags/0.0.1.zip",
+        "timestamp": "2025-11-14 00:00:00",
+        "version": "1.0.0.0"
+      }
+    ]
+  }
+]
