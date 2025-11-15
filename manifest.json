@@ -11,6 +11,14 @@
         "checksum": "a2355910dfe04317914c0e22ee8914dd",
         "changelog": "Initial release with VO badge support for TV series",
         "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://github.com/jordanpantin/jellyfin-plugin-vo-badge/releases/download/0.0.9/vo-badge_0.0.9.zip",
+        "timestamp": "2025-11-15 16:09:00",
+        "version": "0.0.9"
+      },
+      {
+        "checksum": "a2355910dfe04317914c0e22ee8914dd",
+        "changelog": "Initial release with VO badge support for TV series",
+        "targetAbi": "10.11.0.0",
         "sourceUrl": "https://github.com/jordanpantin/jellyfin-plugin-vo-badge/releases/download/0.0.8/vo-badge_0.0.8.zip",
         "timestamp": "2025-11-15 15:38:00",
         "version": "0.0.8"
@@ -22,22 +30,6 @@
         "sourceUrl": "https://github.com/jordanpantin/jellyfin-plugin-vo-badge/releases/download/0.0.7/vo-badge_0.0.7.zip",
         "timestamp": "2025-11-15 15:21:00",
         "version": "0.0.7"
-      },
-      {
-        "checksum": "93cbef602b3a9c964312bac7496853e5",
-        "changelog": "Initial release with VO badge support for TV series",
-        "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://github.com/jordanpantin/jellyfin-plugin-vo-badge/releases/download/0.0.6/vo-badge_0.0.6.zip",
-        "timestamp": "2025-11-15 15:02:00",
-        "version": "0.0.6"
-      },
-      {
-        "checksum": "b7ec9782997c0c212b13ef5800c7e161",
-        "changelog": "Initial release with VO badge support for TV series",
-        "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://github.com/jordanpantin/jellyfin-plugin-vo-badge/releases/download/0.0.5/vo-badge_0.0.5.zip",
-        "timestamp": "2025-11-15 14:52:00",
-        "version": "0.0.5"
       }
     ]
   }
