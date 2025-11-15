@@ -8,6 +8,14 @@
     "overview": "Visual Indicator for Original Language Content",
     "versions": [
       {
+        "checksum": "ddef0ac6fc9453120c630f57ca3c960e",
+        "changelog": "Initial release with VO badge support for TV series",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://github.com/jordanpantin/jellyfin-plugin-vo-badge/releases/download/0.0.3/vo-badge_0.0.3.zip",
+        "timestamp": "2025-11-15 14:15:00",
+        "version": "0.0.3"
+      },
+      {
         "checksum": "c80c3b8eec3185d30a77120738cc57ec",
         "changelog": "Initial release with VO badge support for TV series",
         "targetAbi": "10.11.0.0",
