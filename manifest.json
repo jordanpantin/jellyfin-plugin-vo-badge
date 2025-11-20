@@ -8,6 +8,14 @@
     "overview": "Visual Indicator for Original Language Content",
     "versions": [
       {
+        "checksum": "226c006e58d0d2d86cd62b67a35060de",
+        "changelog": "Fixed: Use BadgeService instead of IDynamicImageProvider for reliable badge application. IDynamicImageProvider is for generating new images, not modifying existing ones.",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://github.com/jordanpantin/jellyfin-plugin-vo-badge/releases/download/0.0.12/vo-badge_0.0.12.zip",
+        "timestamp": "2025-11-20 16:00:00",
+        "version": "0.0.12"
+      },
+      {
         "checksum": "c513f1dcdccd151e2225fd7147ac8ab3",
         "changelog": "Initial release with VO badge support for TV series",
         "targetAbi": "10.11.0.0",
