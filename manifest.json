@@ -8,6 +8,14 @@
     "overview": "Visual Indicator for Original Language Content",
     "versions": [
       {
+        "checksum": "ffdbc44525e3d4605834046793da895f",
+        "changelog": "Enhanced logging: Added comprehensive debug/info logs throughout BadgeService to trace initialization, event handling, and badge creation for easier troubleshooting.",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://github.com/jordanpantin/jellyfin-plugin-vo-badge/releases/download/0.0.13/vo-badge_0.0.13.zip",
+        "timestamp": "2025-11-20 16:30:00",
+        "version": "0.0.13"
+      },
+      {
         "checksum": "226c006e58d0d2d86cd62b67a35060de",
         "changelog": "Fixed: Use BadgeService instead of IDynamicImageProvider for reliable badge application. IDynamicImageProvider is for generating new images, not modifying existing ones.",
         "targetAbi": "10.11.0.0",
