@@ -8,6 +8,14 @@
     "overview": "Visual Indicator for Original Language Content",
     "versions": [
       {
+        "checksum": "b3d9a2120a0e54647d381721867e567f",
+        "changelog": "Critical fix: EnumerateAllItems() now properly queries library using ILibraryManager.GetItemList() instead of reflection. Should now process existing items at startup.",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://github.com/jordanpantin/jellyfin-plugin-vo-badge/releases/download/0.0.14/vo-badge_0.0.14.zip",
+        "timestamp": "2025-11-20 17:00:00",
+        "version": "0.0.14"
+      },
+      {
         "checksum": "ffdbc44525e3d4605834046793da895f",
         "changelog": "Enhanced logging: Added comprehensive debug/info logs throughout BadgeService to trace initialization, event handling, and badge creation for easier troubleshooting.",
         "targetAbi": "10.11.0.0",
