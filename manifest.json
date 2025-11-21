@@ -8,44 +8,20 @@
     "overview": "Visual Indicator for Original Language Content",
     "versions": [
       {
+        "checksum": "1eae8a1915ab0fdad31c1256465a4e8b",
+        "changelog": "Fixed: Switched to event-driven mode to avoid 'Cannot deserialize unknown type' errors at startup. Badges now applied via ItemAdded/ItemUpdated events. Use library scan to apply badges to existing items.",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://github.com/jordanpantin/jellyfin-plugin-vo-badge/releases/download/0.0.15/vo-badge_0.0.15.zip",
+        "timestamp": "2025-11-21 09:45:00",
+        "version": "0.0.15"
+      },
+      {
         "checksum": "b3d9a2120a0e54647d381721867e567f",
         "changelog": "Critical fix: EnumerateAllItems() now properly queries library using ILibraryManager.GetItemList() instead of reflection. Should now process existing items at startup.",
         "targetAbi": "10.11.0.0",
         "sourceUrl": "https://github.com/jordanpantin/jellyfin-plugin-vo-badge/releases/download/0.0.14/vo-badge_0.0.14.zip",
         "timestamp": "2025-11-20 17:00:00",
         "version": "0.0.14"
-      },
-      {
-        "checksum": "ffdbc44525e3d4605834046793da895f",
-        "changelog": "Enhanced logging: Added comprehensive debug/info logs throughout BadgeService to trace initialization, event handling, and badge creation for easier troubleshooting.",
-        "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://github.com/jordanpantin/jellyfin-plugin-vo-badge/releases/download/0.0.13/vo-badge_0.0.13.zip",
-        "timestamp": "2025-11-20 16:30:00",
-        "version": "0.0.13"
-      },
-      {
-        "checksum": "226c006e58d0d2d86cd62b67a35060de",
-        "changelog": "Fixed: Use BadgeService instead of IDynamicImageProvider for reliable badge application. IDynamicImageProvider is for generating new images, not modifying existing ones.",
-        "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://github.com/jordanpantin/jellyfin-plugin-vo-badge/releases/download/0.0.12/vo-badge_0.0.12.zip",
-        "timestamp": "2025-11-20 16:00:00",
-        "version": "0.0.12"
-      },
-      {
-        "checksum": "c513f1dcdccd151e2225fd7147ac8ab3",
-        "changelog": "Initial release with VO badge support for TV series",
-        "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://github.com/jordanpantin/jellyfin-plugin-vo-badge/releases/download/0.0.11/vo-badge_0.0.11.zip",
-        "timestamp": "2025-11-15 16:09:00",
-        "version": "0.0.11"
-      },
-      {
-        "checksum": "1056abc7916efbac155064dcbaadab90",
-        "changelog": "Initial release with VO badge support for TV series",
-        "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://github.com/jordanpantin/jellyfin-plugin-vo-badge/releases/download/0.0.9/vo-badge_0.0.9.zip",
-        "timestamp": "2025-11-15 16:09:00",
-        "version": "0.0.10"
       }
     ]
   }
