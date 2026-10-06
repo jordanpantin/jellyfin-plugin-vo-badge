@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>VO Badge</title>
+</head>
+<body>
+    <div id="VoBadgeConfigPage" data-role="page" class="page type-interior pluginConfigurationPage"
+         data-require="emby-input,emby-button,emby-checkbox" data-controller="__plugin/VoBadgeConfig.js">
+        <style>
+            #VoBadgeConfigPage .badge-row {
+                border: 1px solid var(--jf-palette-divider, rgba(255,255,255,.12));
+                background: var(--jf-palette-background-paper, transparent);
+                color: var(--jf-palette-text-primary, inherit);
+                border-radius: 8px;
+                padding: 1em;
+                margin: 0 0 1em;
+            }
+            #VoBadgeConfigPage .badge-head,
+            #VoBadgeConfigPage .fieldDescription,
+            #VoBadgeConfigPage .inputLabel {
+                color: var(--jf-palette-text-secondary, var(--jf-palette-text-primary, inherit));
+            }
+
+        </style>
+        <div data-role="content">
+            <div class="content-primary">
+                <form id="VoBadgeConfigForm">
+                    <div class="sectionTitleContainer flex align-items-center">
+                        <h2 class="sectionTitle">Badges</h2>
+                    </div>
+                    <div class="fieldDescription">Badges enregistrés. Le premier qui matche gagne. Marqueurs vides = badge par défaut (VO).</div>
+                    <div id="BadgeList">
+                        <div class="badge-row">
+                            <div class="badge-head" style="display:flex;align-items:center;gap:.6em;margin-bottom:.8em;font-weight:600;"><span style="width:14px;height:14px;border-radius:50%;background:#C4A35A;"></span><span>VO</span><span style="opacity:.7;font-weight:400;">#C4A35A · taille 18 · défaut</span></div>
+                            <div class="inputContainer"><label class="inputLabel inputLabelUnfocused">Texte</label><input is="emby-input" class="badge-text" type="text" value="VO" /></div>
+                            <div class="inputContainer"><label class="inputLabel inputLabelUnfocused">Couleur</label><input is="emby-input" class="badge-color" type="text" value="#C4A35A" /></div>
+                            <div class="inputContainer"><label class="inputLabel inputLabelUnfocused">Couleur du texte</label><input is="emby-input" class="badge-text-color" type="text" value="#F6F1E7" /></div>
+                            <div class="inputContainer"><label class="inputLabel inputLabelUnfocused">Taille</label><input is="emby-input" class="badge-size" type="number" min="5" max="50" value="18" /></div>
+                            <div class="inputContainer"><label class="inputLabel inputLabelUnfocused">Marqueurs</label><input is="emby-input" class="badge-markers" type="text" value="" /><div class="fieldDescription">Vide = badge par défaut</div></div>
+                            <div class="checkboxContainer checkboxContainer-withDescription"><label class="emby-checkbox-label"><input is="emby-checkbox" class="badge-filled" type="checkbox" /><span>Fond plein</span></label></div>
+                            <div class="checkboxContainer checkboxContainer-withDescription"><label class="emby-checkbox-label"><input is="emby-checkbox" class="badge-enabled" type="checkbox" checked /><span>Actif</span></label></div>
+                            <button is="emby-button" type="button" class="badge-remove raised emby-button"><span>Retirer</span></button>
+                        </div>
+                        <div class="badge-row">
+                            <div class="badge-head" style="display:flex;align-items:center;gap:.6em;margin-bottom:.8em;font-weight:600;"><span style="width:14px;height:14px;border-radius:50%;background:#1F7A4D;"></span><span>VF</span><span style="opacity:.7;font-weight:400;">#1F7A4D · taille 18 · vf, vff, fr, fra…</span></div>
+                            <div class="inputContainer"><label class="inputLabel inputLabelUnfocused">Texte</label><input is="emby-input" class="badge-text" type="text" value="VF" /></div>
+                            <div class="inputContainer"><label class="inputLabel inputLabelUnfocused">Couleur</label><input is="emby-input" class="badge-color" type="text" value="#1F7A4D" /></div>
+                            <div class="inputContainer"><label class="inputLabel inputLabelUnfocused">Couleur du texte</label><input is="emby-input" class="badge-text-color" type="text" value="#F7F8FA" /></div>
+                            <div class="inputContainer"><label class="inputLabel inputLabelUnfocused">Taille</label><input is="emby-input" class="badge-size" type="number" min="5" max="50" value="18" /></div>
+                            <div class="inputContainer"><label class="inputLabel inputLabelUnfocused">Marqueurs</label><input is="emby-input" class="badge-markers" type="text" value="vf,vff,vfi,fr-fr,fra-fr,fre-fr,truefrench,true french,fra,fre,fr,french,français,francais" /><div class="fieldDescription">Vide = badge par défaut</div></div>
+                            <div class="checkboxContainer checkboxContainer-withDescription"><label class="emby-checkbox-label"><input is="emby-checkbox" class="badge-filled" type="checkbox" checked /><span>Fond plein</span></label></div>
+                            <div class="checkboxContainer checkboxContainer-withDescription"><label class="emby-checkbox-label"><input is="emby-checkbox" class="badge-enabled" type="checkbox" checked /><span>Actif</span></label></div>
+                            <button is="emby-button" type="button" class="badge-remove raised emby-button"><span>Retirer</span></button>
+                        </div>
+                    </div>
+                    <div style="margin: 1em 0;">
+                        <button is="emby-button" type="button" id="AddBadge" class="raised button-submit block emby-button">
+                            <span>Ajouter un badge</span>
+                        </button>
+                    </div>
+
+                    <div class="checkboxContainer checkboxContainer-withDescription">
+                        <label class="emby-checkbox-label">
+                            <input id="EnableForMovies" type="checkbox" is="emby-checkbox" checked />
+                            <span>Films</span>
+                        </label>
+                    </div>
+                    <div class="checkboxContainer checkboxContainer-withDescription">
+                        <label class="emby-checkbox-label">
+                            <input id="EnableForEpisodes" type="checkbox" is="emby-checkbox" checked />
+                            <span>Épisodes</span>
+                        </label>
+                    </div>
+
+                    <div class="inputContainer">
+                        <label class="inputLabel inputLabelUnfocused" for="FrenchLanguageCodes">Codes français génériques</label>
+                        <input id="FrenchLanguageCodes" type="text" is="emby-input" />
+                        <div class="fieldDescription">Sans marqueur de badge ni marqueur d'effacement, aucun badge n'est posé</div>
+                    </div>
+                    <div class="inputContainer">
+                        <label class="inputLabel inputLabelUnfocused" for="ClearMarkers">Marqueurs qui retirent le badge</label>
+                        <input id="ClearMarkers" type="text" is="emby-input" />
+                        <div class="fieldDescription">Optionnel. Si un de ces marqueurs est trouvé, aucun badge n'est posé</div>
+                    </div>
+
+                    <div>
+                        <button is="emby-button" type="submit" class="raised button-submit block emby-button">
+                            <span>Enregistrer</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

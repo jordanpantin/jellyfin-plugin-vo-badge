@@ -1,0 +1,36 @@
+[
+  {
+    "category": "General",
+    "guid": "217e21a6-08a7-4495-be64-a3cd6a7fa200",
+    "name": "VO Badge",
+    "description": "Adds a configurable badge on movie and episode posters when the preferred audio language is missing. Default badges are VO and VF.",
+    "owner": "jordanpantin",
+    "overview": "VO and VF badges on posters",
+    "versions": [
+      {
+        "checksum": "d250980f9bbe42b32c869f2e6324acea",
+        "changelog": "Jellyfin 12.1. Configurable badges (text, color, size, markers). Default VO and VF. Does not modify video files.",
+        "targetAbi": "12.1.0.0",
+        "sourceUrl": "https://github.com/jordanpantin/jellyfin-plugin-vo-badge/releases/download/0.0.16/vo-badge_0.0.16.zip",
+        "timestamp": "2026-09-22T15:30:00Z",
+        "version": "0.0.16"
+      },
+      {
+        "checksum": "1eae8a1915ab0fdad31c1256465a4e8b",
+        "changelog": "Fixed: event-driven mode. Badges applied via ItemAdded/ItemUpdated. Use a library scan for existing items.",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://github.com/jordanpantin/jellyfin-plugin-vo-badge/releases/download/0.0.15/vo-badge_0.0.15.zip",
+        "timestamp": "2025-11-21T09:45:00Z",
+        "version": "0.0.15"
+      },
+      {
+        "checksum": "b3d9a2120a0e54647d381721867e567f",
+        "changelog": "Library scan uses ILibraryManager.GetItemList().",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://github.com/jordanpantin/jellyfin-plugin-vo-badge/releases/download/0.0.14/vo-badge_0.0.14.zip",
+        "timestamp": "2025-11-20T17:00:00Z",
+        "version": "0.0.14"
+      }
+    ]
+  }
+]

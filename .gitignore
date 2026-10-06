@@ -1,0 +1,10 @@
+bin/
+obj/
+docker/config/
+docker/cache/
+docker/media/
+release/
+.playwright-mcp/
+*.user
+.vs/
+/docker-compose.override.yml

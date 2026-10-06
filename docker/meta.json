@@ -1,0 +1,13 @@
+{
+  "category": "Metadata",
+  "guid": "217e21a6-08a7-4495-be64-a3cd6a7fa200",
+  "name": "VO Badge",
+  "description": "Adds a VO badge on movie/episode posters when French audio track is missing.",
+  "overview": "VO badge overlay",
+  "owner": "jorda",
+  "targetAbi": "12.1.0.0",
+  "timestamp": "2026-09-22T00:00:00.0000000Z",
+  "version": "0.0.16.0",
+  "status": "Active",
+  "autoUpdate": false
+}

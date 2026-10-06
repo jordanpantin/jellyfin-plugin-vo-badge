@@ -1,0 +1,13 @@
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:12.1
+    container_name: vobadge-jellyfin
+    ports:
+      - "8096:8096"
+    volumes:
+      - ./docker/config:/config
+      - ./docker/cache:/cache
+      - ./docker/media:/media
+    environment:
+      - JELLYFIN_PublishedServerUrl=http://localhost:8096
+    restart: unless-stopped
