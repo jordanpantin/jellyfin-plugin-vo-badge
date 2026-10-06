@@ -2,10 +2,10 @@ $ErrorActionPreference = "Stop"
 
 $root = Split-Path -Parent $PSScriptRoot
 $pluginDir = Join-Path $PSScriptRoot "config\plugins\VoBadge"
-$buildDir = Join-Path $root "bin\Release\net10.0"
+$buildDir = Join-Path $root "src\VoBadge\bin\Release\net10.0"
 
 Write-Host "Building plugin (Release)..."
-dotnet build (Join-Path $root "VoBadge2.sln") -c Release --nologo
+dotnet build (Join-Path $root "src\VoBadge.sln") -c Release --nologo
 if (-not $?) { throw "Build failed" }
 
 New-Item -ItemType Directory -Force -Path $pluginDir | Out-Null
