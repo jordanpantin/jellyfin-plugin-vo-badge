@@ -1,3 +1,4 @@
+using System.Text.Json;
 using MediaBrowser.Model.Plugins;
 
 namespace Jellyfin.Plugin.VoBadge.Configuration;
@@ -7,12 +8,16 @@ namespace Jellyfin.Plugin.VoBadge.Configuration;
 /// </summary>
 public class PluginConfiguration : BasePluginConfiguration
 {
+    private static readonly JsonSerializerOptions BadgeJsonOptions = new()
+    {
+        PropertyNameCaseInsensitive = true
+    };
+
     /// <summary>
     /// Initializes a new instance of the <see cref="PluginConfiguration"/> class.
     /// </summary>
     public PluginConfiguration()
     {
-        Badges = BadgeDefinition.CreateDefaults();
         EnableForMovies = true;
         EnableForEpisodes = true;
         FrenchLanguageCodes = "fre,fra,fr,french,français,francais";
@@ -21,11 +26,13 @@ public class PluginConfiguration : BasePluginConfiguration
 
     /// <summary>
     /// Gets or sets the badges the user can edit and extend.
+    /// Must stay empty here. Jellyfin's XML serializer appends deserialized items
+    /// onto any list created in the constructor, so seeding defaults restored removed badges after every restart.
     /// </summary>
-    public List<BadgeDefinition> Badges { get; set; }
+    public List<BadgeDefinition> Badges { get; set; } = [];
 
     /// <summary>
-    /// Gets or sets the same badges as JSON, so the list survives XML save.
+    /// Gets or sets the same badges as JSON. This is the list the config page saved.
     /// </summary>
     public string BadgesJson { get; set; } = string.Empty;
 
@@ -50,37 +57,57 @@ public class PluginConfiguration : BasePluginConfiguration
     public string ClearMarkers { get; set; } = string.Empty;
 
     /// <summary>
-    /// Gets the badges to apply, falling back to the VO and VFQ examples.
+    /// Gets the badges to apply. Defaults are used only when nothing has been saved.
     /// </summary>
-    /// <returns>Enabled badges.</returns>
+    /// <returns>Enabled badges. Empty when the user disabled or removed every badge.</returns>
     public List<BadgeDefinition> GetBadges()
     {
-        var badges = ReadBadges()
+        return ReadBadges()
             .Where(b => b.Enabled && !string.IsNullOrWhiteSpace(b.Text))
             .ToList();
+    }
 
-        return badges.Count > 0 ? badges : BadgeDefinition.CreateDefaults();
+    /// <summary>
+    /// Copies the saved JSON list onto <see cref="Badges"/> so the API does not return a stale XML list.
+    /// </summary>
+    public void ApplySavedBadges()
+    {
+        var saved = ReadSavedBadges();
+        if (saved is not null)
+        {
+            Badges = saved;
+        }
     }
 
     private List<BadgeDefinition> ReadBadges()
     {
+        return ReadSavedBadges() ?? BadgeDefinition.CreateDefaults();
+    }
+
+    /// <summary>
+    /// Returns the list the user saved, or null when badges were never saved.
+    /// An empty list is kept: it means every badge was removed.
+    /// </summary>
+    /// <returns>The saved badges, or null.</returns>
+    private List<BadgeDefinition>? ReadSavedBadges()
+    {
+        if (!string.IsNullOrWhiteSpace(BadgesJson))
+        {
+            try
+            {
+                return JsonSerializer.Deserialize<List<BadgeDefinition>>(BadgesJson, BadgeJsonOptions) ?? [];
+            }
+            catch (JsonException)
+            {
+                // Fall through to the XML list.
+            }
+        }
+
         if (Badges is { Count: > 0 })
         {
             return Badges;
         }
 
-        if (string.IsNullOrWhiteSpace(BadgesJson))
-        {
-            return [];
-        }
-
-        try
-        {
-            return System.Text.Json.JsonSerializer.Deserialize<List<BadgeDefinition>>(BadgesJson) ?? [];
-        }
-        catch (System.Text.Json.JsonException)
-        {
-            return [];
-        }
+        return null;
     }
 }

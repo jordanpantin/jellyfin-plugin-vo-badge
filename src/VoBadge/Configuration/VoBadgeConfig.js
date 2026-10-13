@@ -102,11 +102,32 @@ function badgeRow(badge) {
 function renderBadges(view, badges) {
     const list = view.querySelector('#BadgeList');
     list.replaceChildren();
-    (badges && badges.length ? badges : defaultBadges).forEach((badge) => {
+    (badges || []).forEach((badge) => {
         const row = badgeRow(badge);
         list.appendChild(row);
         upgrade(row);
     });
+}
+
+function savedBadgeList(config) {
+    const raw = config && (config.BadgesJson || config.badgesJson);
+    if (typeof raw === 'string' && raw.trim()) {
+        try {
+            const parsed = JSON.parse(raw);
+            if (Array.isArray(parsed)) {
+                return parsed;
+            }
+        } catch (ex) {
+            console.error(ex);
+        }
+    }
+
+    const list = config && (config.Badges || config.badges);
+    if (Array.isArray(list) && list.length) {
+        return list;
+    }
+
+    return null;
 }
 
 function readBadges(view) {
@@ -128,15 +149,8 @@ function loadConfig(view) {
     }
 
     ApiClient.getPluginConfiguration(pluginId).then((config) => {
-        let saved = config.Badges || config.badges;
-        if ((!saved || !saved.length) && config.BadgesJson) {
-            try {
-                saved = JSON.parse(config.BadgesJson);
-            } catch (ex) {
-                saved = null;
-            }
-        }
-        renderBadges(view, saved && saved.length ? saved : defaultBadges);
+        const saved = savedBadgeList(config);
+        renderBadges(view, saved === null ? defaultBadges : saved);
         view.querySelector('#EnableForMovies').checked = config.EnableForMovies !== false;
         view.querySelector('#EnableForEpisodes').checked = config.EnableForEpisodes !== false;
         view.querySelector('#FrenchLanguageCodes').value = config.FrenchLanguageCodes || 'fre,fra,fr,french,français,francais';
