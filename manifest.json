@@ -8,6 +8,14 @@
     "overview": "VO and VF badges on posters",
     "versions": [
       {
+        "checksum": "4577c50d795f7e03ccd3105152a6df45",
+        "changelog": "Saved badges no longer reset to VO and VF after a restart. A poster I/O error no longer crashes the server.",
+        "targetAbi": "12.1.0.0",
+        "sourceUrl": "https://github.com/jordanpantin/jellyfin-plugin-vo-badge/releases/download/0.0.17/vo-badge_0.0.17.zip",
+        "timestamp": "2026-10-14T11:16:23Z",
+        "version": "0.0.17"
+      },
+      {
         "checksum": "d250980f9bbe42b32c869f2e6324acea",
         "changelog": "Jellyfin 12.1. Configurable badges (text, color, size, markers). Default VO and VF. Does not modify video files.",
         "targetAbi": "12.1.0.0",
