@@ -56,14 +56,20 @@ public class BadgeOverlayService
 
                 if (File.Exists(backupPath))
                 {
-                    File.Copy(backupPath, imagePath, true);
+                    CopyAtomic(backupPath, imagePath);
                 }
                 else
                 {
                     File.Copy(imagePath, backupPath, false);
                 }
 
-                using var originalBitmap = SKBitmap.Decode(imagePath);
+                var imageBytes = TryReadAllBytes(imagePath);
+                if (imageBytes is null)
+                {
+                    return false;
+                }
+
+                using var originalBitmap = SKBitmap.Decode(imageBytes);
                 if (originalBitmap is null)
                 {
                     _logger.LogWarning("Failed to decode image: {Path}", imagePath);
@@ -87,7 +93,7 @@ public class BadgeOverlayService
                     return false;
                 }
 
-                File.WriteAllBytes(imagePath, data.ToArray());
+                WriteAtomic(imagePath, data.ToArray());
                 WriteStamp(imagePath, badgeText);
 
                 _logger.LogDebug("Badge added to image: {Path}", imagePath);
@@ -126,7 +132,7 @@ public class BadgeOverlayService
                     return false;
                 }
 
-                File.Copy(backupPath, imagePath, true);
+                CopyAtomic(backupPath, imagePath);
                 DeleteBackup(imagePath);
                 _logger.LogDebug("Restored original image from backup: {Path}", imagePath);
                 return true;
@@ -148,14 +154,22 @@ public class BadgeOverlayService
     {
         lock (_sync)
         {
-            var stampPath = GetStampPath(imagePath);
-            if (!File.Exists(stampPath))
+            try
             {
+                var stampPath = GetStampPath(imagePath);
+                if (!File.Exists(stampPath))
+                {
+                    return null;
+                }
+
+                var parts = File.ReadAllText(stampPath).Trim().Split('|');
+                return parts.Length > 1 ? parts[1] : null;
+            }
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+            {
+                _logger.LogError(ex, "Failed to read badge label: {Path}", imagePath);
                 return null;
             }
-
-            var parts = File.ReadAllText(stampPath).Trim().Split('|');
-            return parts.Length > 1 ? parts[1] : null;
         }
     }
 
@@ -168,18 +182,26 @@ public class BadgeOverlayService
     {
         lock (_sync)
         {
-            if (FindExistingBackup(imagePath) is null)
+            try
             {
+                if (FindExistingBackup(imagePath) is null)
+                {
+                    return false;
+                }
+
+                if (IsCurrentImageOurBadge(imagePath))
+                {
+                    return true;
+                }
+
+                DeleteBackup(imagePath);
                 return false;
             }
-
-            if (IsCurrentImageOurBadge(imagePath))
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
             {
-                return true;
+                _logger.LogError(ex, "Failed to inspect badge for image: {Path}", imagePath);
+                return false;
             }
-
-            DeleteBackup(imagePath);
-            return false;
         }
     }
 
@@ -295,6 +317,43 @@ public class BadgeOverlayService
 
         var legacy = GetLegacyBackupPath(imagePath);
         return File.Exists(legacy) ? legacy : null;
+    }
+
+    private byte[]? TryReadAllBytes(string path)
+    {
+        try
+        {
+            return File.ReadAllBytes(path);
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            _logger.LogError(ex, "Failed to read image: {Path}", path);
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// Replaces a poster without truncating it in place. An in-place write can make a
+    /// concurrent SkiaSharp read throw from a native callback and take down the server.
+    /// </summary>
+    private static void CopyAtomic(string sourcePath, string destinationPath)
+    {
+        var bytes = File.ReadAllBytes(sourcePath);
+        WriteAtomic(destinationPath, bytes);
+    }
+
+    private static void WriteAtomic(string destinationPath, byte[] data)
+    {
+        var tempPath = destinationPath + ".vobadge.tmp";
+        try
+        {
+            File.WriteAllBytes(tempPath, data);
+            File.Move(tempPath, destinationPath, overwrite: true);
+        }
+        finally
+        {
+            TryDelete(tempPath);
+        }
     }
 
     private static void TryDelete(string path)
