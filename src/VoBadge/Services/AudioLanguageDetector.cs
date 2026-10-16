@@ -10,6 +10,18 @@ namespace Jellyfin.Plugin.VoBadge.Services;
 /// </summary>
 public static class AudioLanguageDetector
 {
+    private static readonly HashSet<string> UnknownLanguageCodes = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "und",
+        "undetermined",
+        "unknown",
+        "zxx",
+        "mis",
+        "mul",
+        "xx",
+        "nul"
+    };
+
     /// <summary>
     /// Resolves the badge for an item.
     /// </summary>
@@ -80,8 +92,21 @@ public static class AudioLanguageDetector
             return new BadgeMatch(null);
         }
 
+        // Jellyfin hides und/mis/mul/zxx, so the track shows as "AAC - Stereo"
+        // or "Dolby Digital - Stereo". That is not a known foreign language. Do not guess VO.
+        if (!audioStreams.Any(HasKnownLanguage))
+        {
+            return new BadgeMatch(null);
+        }
+
         var fallback = badges.FirstOrDefault(b => string.IsNullOrWhiteSpace(b.Markers));
         return new BadgeMatch(fallback);
+    }
+
+    private static bool HasKnownLanguage(MediaStream stream)
+    {
+        var language = stream.Language?.Trim();
+        return !string.IsNullOrEmpty(language) && !UnknownLanguageCodes.Contains(language);
     }
 
     private static List<string> ParseMarkers(string? codes)
