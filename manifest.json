@@ -8,6 +8,14 @@
     "overview": "VO and VF badges on posters",
     "versions": [
       {
+        "checksum": "bfa69b3fbf7d85193a5aa59fdc2114a9",
+        "changelog": "Missing audio language no longer gets a false VO badge. Tracks shown as AAC - Stereo or Dolby Digital - Stereo are left unbadged.",
+        "targetAbi": "12.1.0.0",
+        "sourceUrl": "https://github.com/jordanpantin/jellyfin-plugin-vo-badge/releases/download/0.0.18/vo-badge_0.0.18.zip",
+        "timestamp": "2026-10-16T13:38:22Z",
+        "version": "0.0.18"
+      },
+      {
         "checksum": "4577c50d795f7e03ccd3105152a6df45",
         "changelog": "Saved badges no longer reset to VO and VF after a restart. A poster I/O error no longer crashes the server.",
         "targetAbi": "12.1.0.0",
